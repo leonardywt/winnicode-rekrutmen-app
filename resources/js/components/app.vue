@@ -1,3 +1,3 @@
 <template>
-    <h1>Winnicode - Rekrutmen App</h1>
+    <router-view/>
 </template>
