@@ -6,13 +6,16 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import { HSStaticMethods } from "preline";
+import 'preline/dist/preline';
+import { HSStaticMethods, HSStepper } from "preline";
 
 HSStaticMethods.autoInit();
+HSStepper.autoInit();
 
 const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
         HSStaticMethods.autoInit();
+        HSStepper.autoInit();
     }
 });
 

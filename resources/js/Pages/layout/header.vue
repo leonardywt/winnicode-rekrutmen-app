@@ -45,16 +45,16 @@
             </div>
 
             <!-- Button Group -->
-            <div class="flex items-center gap-x-1 md:gap-x-2 ms-auto py-1 md:ps-6 md:order-3 md:col-span-3">
-                <a href="login"
+            <div v-if="!isAuthenticated"
+                class="flex items-center gap-x-1 md:gap-x-2 ms-auto py-1 md:ps-6 md:order-3 md:col-span-3">
+                <a href="/login"
                     class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white border border-gray-200 text-[#4640DE] hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
                     Login
                 </a>
-                <a href="register"
+                <a href="/register"
                     class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-[#4640DE] text-[#FFFFFF] hover:bg-[#343283] focus:outline-none transition disabled:opacity-50 disabled:pointer-events-none">
                     Sign up
                 </a>
-
 
             </div>
             <!-- End Button Group -->
@@ -66,9 +66,8 @@
                 <div
                     class="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:justify-start md:items-center md:gap-y-0 md:gap-x-7 md:mt-0">
                     <div>
-                        <a
-                            class="inline-block text-black hover:text-gray-600 focus:outline-none focus:text-gray-600"
-                            href="findjobs" aria-current="page">Find Jobs</a>
+                        <a class="inline-block text-black hover:text-gray-600 focus:outline-none focus:text-gray-600"
+                            href="/findjobs" aria-current="page">Find Jobs</a>
                     </div>
 
                     <!-- <div>
@@ -89,7 +88,24 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import ApplicationLogo from '@/components/ApplicationLogo.vue';
+import Dropdown from '@/components/Dropdown.vue';
+import DropdownLink from '@/components/DropdownLink.vue';
+import NavLink from '@/components/NavLink.vue';
+import ResponsiveNavLink from '@/components/ResponsiveNavLink.vue';
+import { usePage } from '@inertiajs/vue3';
 export default {
     name: 'Header',
+    setup() {
+        const { props } = usePage();
+        const isAuthenticated = ref(false);
+
+        onMounted(() => {
+            isAuthenticated.value = props.auth.user !== null;
+        });
+
+        return { isAuthenticated };
+    }
 }
 </script>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import homepageIndex from '../Pages/homepage.vue'
-import findjobsIndex from '../Pages/findjobs.vue'
+import findjobsIndex from '../Pages/FindJobs/findjobs.vue'
 import notfoundIndex from '../components/notfound.vue'
 
 const routes = [

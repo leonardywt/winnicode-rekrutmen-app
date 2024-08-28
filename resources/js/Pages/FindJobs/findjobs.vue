@@ -1,13 +1,14 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import Header from './layout/header.vue';
-import Footer from './layout/footer.vue';
+import AuthenticatedUserLayout from '@/Layouts/AuthenticatedUserLayout.vue';
+import Header from '../layout/header.vue';
+import Footer from '../layout/footer.vue';
 </script>
 
 <template>
     <Head title="Find Jobs" />
-    <Header />
-    <div class="bg-[#F8F8FD] min-h-[calc(100vh-70px)] flex flex-col justify-center items-center">
+    <AuthenticatedUserLayout>
+    <div class="bg-[#F8F8FD] min-h-[calc(100vh-66px)] flex flex-col justify-center items-center">
         <div class="max-w-7xl flex flex-col justify-center px-10 md:px-24">
             <div class="">
                 <p class="text-5xl text-center font-bold">Find your <span class="text-[#26A4FF]">dream job</span></p>
@@ -26,7 +27,7 @@ import Footer from './layout/footer.vue';
             </div>
 
         </div>
-        <div class="w-3/4 p-4 bg-white shadow-sm">
+        <div class="w-[80%] p-4 bg-white shadow-sm">
             <div class="flex justify-between pl-10 relative">
                 <input type="email"
                     class="peer mx-2 py-2 pe-0 ps-2 w-[85%] block bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-sm focus:border-t-transparent focus:border-x-transparent focus:border-b-blue-500 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none"
@@ -47,13 +48,13 @@ import Footer from './layout/footer.vue';
             </div>
         </div>
     </div>
-    <div class="px-20 flex py-8">
-        <div class="w-[30%]">
+    <div class="flex mx-auto px-20 py-8">
+        <div class="w-[35%]">
             <div class="flex justify-between items-center">
                 <div class="pl-20 font-bold">Categories</div>
             </div>
         </div>
-        <div class="w-[70%]">
+        <div class="w-[65%]">
             <div class="">
                 <div class="text-xl font-bold">All Jobs</div>
                 <div class="text-[#7C8493] text-xs">Showing "angka" results</div>
@@ -101,5 +102,6 @@ import Footer from './layout/footer.vue';
             </div>
         </div>
     </div>
+</AuthenticatedUserLayout>
     <Footer />
 </template>

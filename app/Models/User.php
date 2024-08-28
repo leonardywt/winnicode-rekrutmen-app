@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'usertype',
         'password',
     ];
 
@@ -43,5 +44,28 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function pekerjaan()
+    {
+        return $this->hasMany(Pekerjaan::class, 'id_perusahaan');
+    }
+
+    // Relationship with TipePekerjaan
+    public function tipePekerjaan()
+    {
+        return $this->hasMany(TipePekerjaan::class, 'id_perusahaan');
+    }
+
+    // Relationship with KategoriPekerjaan
+    public function kategoriPekerjaan()
+    {
+        return $this->hasMany(KategoriPekerjaan::class, 'id_perusahaan');
+    }
+
+    // Relationship with DeskripsiTambahanPekerjaan
+    public function deskripsiTambahanPekerjaan()
+    {
+        return $this->hasMany(DeskripsiTambahanPekerjaan::class, 'id_perusahaan');
     }
 }
