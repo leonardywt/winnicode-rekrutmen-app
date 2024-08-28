@@ -1,6 +1,6 @@
-<h3>Endppoint:</h3>
-<p>/</p>
+<h3>Endpoint:</h3>
 <h4>For User and Company:</h4>
+<p>/</p>
 <p>/login</p>
 <p>/register</p>
 <p>/findjobs</p>
@@ -8,5 +8,5 @@
 <p>/company</p>
 <p>/company/job</p>
 <p>/company/job/create</p>
-<p>/company/job/edit</p> [WIP]
-<p>/company/job/delete</p> [WIP]
+<p>/company/job/edit [WIP]</p> 
+<p>/company/job/delete [WIP]</p> 
