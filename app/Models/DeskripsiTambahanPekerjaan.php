@@ -10,6 +10,8 @@ class DeskripsiTambahanPekerjaan extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'deskripsi_tambahan_pekerjaan';
+    protected $primaryKey = ['id_pekerjaan', 'id_perusahaan'];
+    public $incrementing = false;
     protected $fillable = [
         'id_perusahaan',
         'id_pekerjaan',

@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class TipePekerjaan extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'tipe_pekerjaan';
+    protected $primaryKey = ['id_pekerjaan', 'id_perusahaan', 'tipe'];
+    public $incrementing = false;
     protected $fillable = [
         'id_perusahaan',
         'id_pekerjaan',

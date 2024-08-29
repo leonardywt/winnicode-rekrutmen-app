@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pekerjaan');
             $table->enum('kategori', ['Design', 'Sales', 'Marketing', 'Finance', 'Technology', 'Engineering', 'Business', 'Human Resources']);
             $table->timestamps();
-            $table->softDeletes();
 
             $table->primary(['id_perusahaan', 'id_pekerjaan', 'kategori']);
 

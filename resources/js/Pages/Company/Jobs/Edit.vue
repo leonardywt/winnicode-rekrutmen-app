@@ -6,29 +6,33 @@ import InputLabel from '@/components/InputLabel.vue';
 import PrimaryButton from '@/components/PrimaryButton.vue';
 import TextInput from '@/components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+
+const props = defineProps({ job: Object });
+
+
 const form = useForm({
-    nama: '',
-    tanggal_mulai: '',
-    tanggal_akhir: '',
-    rentang_gaji_awal: '',
-    rentang_gaji_akhir: '',
-    selectedTypes: [],
-    kategori: [],
-    deskripsi: '',
-    responsibilities: '',
-    whoyouare: '',
-    nicetohaves: '',
-    benefits: '',
+    nama: props.job.nama || '',
+    tanggal_mulai: props.job.tanggal_mulai || '',
+    tanggal_akhir: props.job.tanggal_akhir || '',
+    rentang_gaji_awal: props.job.rentang_gaji_awal || '',
+    rentang_gaji_akhir: props.job.rentang_gaji_akhir || '',
+    selectedTypes: props.job.tipe_pekerjaan.map(t => t.tipe) || [],
+    kategori: props.job.kategori_pekerjaan.map(t => t.kategori) || [],
+    deskripsi: props.job.deskripsi_tambahan_pekerjaan.deskripsi || '',
+    responsibilities: props.job.deskripsi_tambahan_pekerjaan.responsibilities || '',
+    whoyouare: props.job.deskripsi_tambahan_pekerjaan.whoyouare || '',
+    nicetohaves: props.job.deskripsi_tambahan_pekerjaan.nicetohaves || '',
+    benefits: props.job.deskripsi_tambahan_pekerjaan.benefits || '',
 });
 const updateSelection = (types, isChecked) => {
-      if (isChecked) {
+    if (isChecked) {
         form.selectedTypes.push(types);
-      } else {
+    } else {
         form.selectedTypes = form.selectedTypes.filter(c => c !== types);
-      }
-    };
+    }
+};
 const submit = () => {
-  form.post("/company/job/store");
+    form.put(`/company/job/update/${props.job.id}`);
 };
 
 </script>
@@ -40,82 +44,82 @@ const submit = () => {
         <Head title="Post job" />
         <div class="max-w-6xl p-4 mx-auto">
             <!-- Stepper -->
-          
-                <div data-hs-stepper="">
-                    <!-- Stepper Nav -->
-                    <ul class="relative flex flex-row gap-x-2 max-w-lg mx-auto">
-                        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
+
+            <div data-hs-stepper="">
+                <!-- Stepper Nav -->
+                <ul class="relative flex flex-row gap-x-2 max-w-lg mx-auto">
+                    <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
       "index": 1
     }'>
-                            <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
-                                <span
-                                    class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
-                                    <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">1</span>
-                                    <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                    Job Information
-                                </span>
+                        <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
+                            <span
+                                class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
+                                <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">1</span>
+                                <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
                             </span>
-                            <div
-                                class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
-                            </div>
-                        </li>
+                            <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                Job Information
+                            </span>
+                        </span>
+                        <div
+                            class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
+                        </div>
+                    </li>
 
-                        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
+                    <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
       "index": 2
     }'>
-                            <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
-                                <span
-                                    class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
-                                    <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">2</span>
-                                    <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                    Job Description
-                                </span>
+                        <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
+                            <span
+                                class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
+                                <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">2</span>
+                                <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
                             </span>
-                            <div
-                                class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
-                            </div>
-                        </li>
+                            <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                Job Description
+                            </span>
+                        </span>
+                        <div
+                            class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
+                        </div>
+                    </li>
 
-                        <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
+                    <li class="flex items-center gap-x-2 shrink basis-0 flex-1 group" data-hs-stepper-nav-item='{
         "index": 3
       }'>
-                            <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
-                                <span
-                                    class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
-                                    <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">3</span>
-                                    <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                    Perks & Benefit
-                                </span>
+                        <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
+                            <span
+                                class="size-7 flex justify-center items-center shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 hs-stepper-active:bg-blue-600 hs-stepper-active:text-white hs-stepper-success:bg-blue-600 hs-stepper-success:text-white hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600 dark:bg-neutral-700 dark:text-white dark:group-focus:bg-gray-600 dark:hs-stepper-active:bg-blue-500 dark:hs-stepper-success:bg-blue-500 dark:hs-stepper-completed:bg-teal-500 dark:hs-stepper-completed:group-focus:bg-teal-600">
+                                <span class="hs-stepper-success:hidden hs-stepper-completed:hidden">3</span>
+                                <svg class="hidden shrink-0 size-3 hs-stepper-success:block"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
                             </span>
-                            <div
-                                class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
-                            </div>
-                        </li>
-                        <!-- End Item -->
-                    </ul>
-                    <!-- End Stepper Nav -->
-                    <form @submit.prevent="submit">
+                            <span class="ms-2 text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                Perks & Benefit
+                            </span>
+                        </span>
+                        <div
+                            class="w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600 dark:bg-neutral-700 dark:hs-stepper-success:bg-blue-600 dark:hs-stepper-completed:bg-teal-600">
+                        </div>
+                    </li>
+                    <!-- End Item -->
+                </ul>
+                <!-- End Stepper Nav -->
+                <form @submit.prevent="submit">
                     <!-- Stepper Content -->
                     <div class="mt-5 sm:mt-8">
                         <!-- First Contnet -->
@@ -135,7 +139,7 @@ const submit = () => {
 
 
                                 <!-- Grid -->
-                              
+
                                 <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                                     <div class="sm:col-span-3">
                                         <label for="af-account-nama"
@@ -171,40 +175,16 @@ const submit = () => {
                                     <!-- End Col -->
 
                                     <div class="sm:col-span-9">
-                                        <div class="flex mt-2.5">
-                                            <input type="checkbox" v-model="form.fulltime" @change="updateSelection('Full Time', $event.target.checked)"
+                                        <div v-for="type in ['Full Time', 'Part Time', 'Remote', 'Internship', 'Contract']"
+                                            :key="type" class="flex mt-2.5">
+                                            <input type="checkbox" :value="type"
+                                                :checked="form.selectedTypes.includes(type)"
+                                                @change="updateSelection(type, $event.target.checked)"
                                                 class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                id="hs-default-checkbox-fulltime">
-                                            <label for="hs-default-checkbox-fulltime"
-                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Full-Time</label>
-                                        </div>
-                                        <div class="flex mt-2.5">
-                                            <input type="checkbox" v-model="form.parttime" @change="updateSelection('Part Time', $event.target.checked)"
-                                                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                id="hs-default-checkbox-parttime">
-                                            <label for="hs-default-checkbox-parttime"
-                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Part-Time</label>
-                                        </div>
-                                        <div class="flex mt-2.5">
-                                            <input type="checkbox" v-model="form.remote" @change="updateSelection('Remote', $event.target.checked)"
-                                                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                id="hs-default-checkbox-remote">
-                                            <label for="hs-default-checkbox-remote"
-                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Remote</label>
-                                        </div>
-                                        <div class="flex mt-2.5">
-                                            <input type="checkbox" v-model="form.internship" @change="updateSelection('Internship', $event.target.checked)"
-                                                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                id="hs-default-checkbox-internship">
-                                            <label for="hs-default-checkbox-internship"
-                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Internship</label>
-                                        </div>
-                                        <div class="flex mt-2.5 first:mt-0">
-                                            <input type="checkbox" v-model="form.contract" @change="updateSelection('Contract', $event.target.checked)"
-                                                class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                id="hs-default-checkbox-contract">
-                                            <label for="hs-default-checkbox-contract"
-                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Contract</label>
+                                                :id="'hs-default-checkbox-' + type.toLowerCase().replace(' ', '-')">
+                                            <label :for="'hs-default-checkbox-' + type.toLowerCase().replace(' ', '-')"
+                                                class="text-sm text-gray-500 ms-3 dark:text-neutral-400">{{ type
+                                                }}</label>
                                         </div>
 
                                     </div>
@@ -334,11 +314,11 @@ const submit = () => {
                                             <!-- End Select -->
                                         </div>
 
-                                       
+
                                     </div>
 
                                 </div>
-                            
+
                                 <!-- End Grid -->
 
                                 <div class="mt-5 flex justify-end gap-x-2">
@@ -531,7 +511,8 @@ const submit = () => {
                             <div
                                 class="p-4 h-48 bg-gray-50 flex justify-center items-center border border-dashed border-gray-200 rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
                                 <button type="submit" :disabled="form.processing"
-                                        class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"> Submit</button>
+                                    class="py-2 px-3 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                                    Submit</button>
                             </div>
                         </div>
                         <!-- End Final Contnet -->
@@ -571,12 +552,11 @@ const submit = () => {
                         </div>
                         <!-- End Button Group -->
                     </div>
-                    </form>
-                    <!-- End Stepper Content -->
-                </div>
-            
+                </form>
+                <!-- End Stepper Content -->
+            </div>
+
             <!-- End Stepper -->
         </div>
     </AuthenticatedLayout>
 </template>
-

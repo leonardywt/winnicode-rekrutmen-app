@@ -19,6 +19,6 @@ class UserMiddleware
         if (Auth::user()->usertype=='user') {
             return $next($request);
         }
-        return redirect()->back();
+        return redirect()->route('homepage');
     }
 }

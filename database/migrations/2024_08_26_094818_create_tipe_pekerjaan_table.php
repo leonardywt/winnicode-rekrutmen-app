@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('tipe_pekerjaan', function (Blueprint $table) {
             $table->unsignedBigInteger('id_perusahaan');
             $table->unsignedBigInteger('id_pekerjaan');
-            $table->enum('tipe', ['full_time', 'part_time', 'remote', 'internship', 'contract']);
+            $table->enum('tipe', ['Full Time', 'Part Time', 'Remote', 'Internship', 'Contract']);
             $table->timestamps();
-            $table->softDeletes();
 
             $table->primary(['id_perusahaan', 'id_pekerjaan', 'tipe']);
 

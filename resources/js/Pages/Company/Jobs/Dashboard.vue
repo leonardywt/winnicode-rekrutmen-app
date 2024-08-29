@@ -1,6 +1,15 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import DangerButton from "@/components/DangerButton.vue";
+const form = useForm({});
+const deleteEvent = (id, jobName) => {
+    if (confirm(`Are you sure you want to delete "${jobName}"?`)) {
+        form.delete(route("company.deletejob", { id: id }), {
+            preserveScroll: true,
+        });
+    }
+};
 defineProps({
     jobs: Array,
 });
@@ -54,19 +63,29 @@ defineProps({
                             <h5 class="text-lg font-semibold tracking-tight text-gray-900">{{ job.nama }}
                             </h5>
                             <p class="mb-2 text-sm font-normal text-gray-700">{{ job.user.name }}</p>
-                            <svg width="83" height="34" viewBox="0 0 83 34" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
-                                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#56CDAD"
-                                    font-size="14">
-                                    Full-Time
-                                </text>
-                            </svg>
-
+                            <div class="flex flex-row">
+                                <svg v-for="tipe in job.tipe_pekerjaan" :key="tipe.tipe" width="83" height="34"
+                                    viewBox="0 0 83 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#56CDAD"
+                                        font-size="14">
+                                        {{ tipe.tipe }}
+                                    </text>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="w-[10%] flex justify-center items-center">
-                            <Link href="" class="px-2 hover:underline">Edit</Link>
-                            <Link href="" class="px-2 hover:underline">Delete</Link>
+                        <div class="w-[10%] flex justify-center items-center gap-x-2">
+                            <Link :href="`job/edit/${job.id}`"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 hover:underline">
+                            Edit</Link>
+                            <DangerButton @click="
+                                deleteEvent(
+                                    job.id,
+                                    job.nama
+                                )
+                                " class="px-2 hover:underline text-red-600">
+                                Delete
+                            </DangerButton>
                         </div>
                     </div>
 

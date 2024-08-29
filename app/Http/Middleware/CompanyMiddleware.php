@@ -19,6 +19,6 @@ class CompanyMiddleware
         if (Auth::user()->usertype=='company') {
             return $next($request);
         }
-        return redirect()->back();
+        return redirect()->route('homepage');
     }
 }
