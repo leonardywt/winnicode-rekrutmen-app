@@ -1,11 +1,42 @@
 <script setup>
+import { ref, watch, computed } from 'vue'
 import { Head } from '@inertiajs/vue3';
 import AuthenticatedUserLayout from '@/Layouts/AuthenticatedUserLayout.vue';
 import Header from '../layout/header.vue';
 import Footer from '../layout/footer.vue';
-defineProps({
-    jobs: Array,
+
+const props = defineProps({
+    jobs: {
+        type: Array,
+        required: true,
+    },
+    jobTypeCounts: {
+        type: Object,
+        required: true,
+    },
+    jobCategoriesCounts: {
+        type: Object,
+        required: true,
+    }
 });
+const selectedTypes = ref([]);
+const selectedCategories = ref([]);
+
+const types = computed(() => {
+    return Object.entries(props.jobTypeCounts).map(([tipe, count]) => ({ tipe, count }));
+});
+const categories = computed(() => {
+    return Object.entries(props.jobCategoriesCounts).map(([kategori, count]) => ({ kategori, count }));
+});
+
+const filteredJobs = computed(() => {
+    return props.jobs.filter(job => {
+        const matchesType = selectedTypes.value.length === 0 || job.tipe_pekerjaan.some(tipe => selectedTypes.value.includes(tipe.tipe));
+        const matchesCategory = selectedCategories.value.length === 0 || job.kategori_pekerjaan.some(kategori => selectedCategories.value.includes(kategori.kategori));
+        return matchesType && matchesCategory;
+    });
+});
+
 </script>
 
 <template>
@@ -53,62 +84,141 @@ defineProps({
                 </div>
             </div>
         </div>
-        <div class="flex mx-auto px-20 py-8">
-            <div class="w-[35%]">
-                <div class="flex justify-between items-center">
-                    <div class="pl-20 font-bold">Categories</div>
+        <div class="flex w-[80%] mx-auto py-8">
+            <div class="w-[35%] pr-20">
+                <div>
+                    <details class="group" open>
+                        <summary
+                            class="flex items-center justify-between gap-2 p-2 font-medium marker:content-none hover:cursor-pointer">
+                            <span class="flex gap-2">
+                                <span>
+                                    Types of Employment
+                                </span>
+                            </span>
+                            <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-90"
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                                </path>
+                            </svg>
+                        </summary>
+
+                        <article class="px-2 pb-4">
+                            <ul class="flex flex-col gap-1 pl-2">
+                                <li v-for="(tipe, index) in types" :key="tipe.tipe">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" :id="`filter_option_type_${index}`" :value="tipe.tipe"
+                                            v-model="selectedTypes" />
+                                        <label :for="`filter_option_type_${index}`" class="px-2">
+                                            {{ tipe.tipe }} ({{ tipe.count }})
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </article>
+
+                    </details>
+                </div>
+                <div>
+                    <details class="group" open>
+                        <summary
+                            class="flex items-center justify-between gap-2 p-2 font-medium marker:content-none hover:cursor-pointer">
+                            <span class="flex gap-2">
+                                <span>
+                                    Categories
+                                </span>
+                            </span>
+                            <svg class="w-5 h-5 text-gray-500 transition group-open:rotate-90"
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                                </path>
+                            </svg>
+                        </summary>
+
+                        <article class="px-2 pb-4">
+                            <ul class="flex flex-col gap-1 pl-2">
+                                <li v-for="(kategori, index) in categories" :key="kategori.kategori">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" :id="`filter_option_category_${index}`" :value="kategori.kategori"
+                                            v-model="selectedCategories" />
+                                        <label :for="`filter_option_category_${index}`" class="px-2">
+                                            {{ kategori.kategori }} ({{ kategori.count }})
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </article>
+
+                    </details>
                 </div>
             </div>
             <div class="w-[65%]">
                 <div class="">
                     <div class="text-xl font-bold">All Jobs</div>
-                    <div class="text-[#7C8493] text-xs">Showing {{ jobs.length }} results</div>
+                    <div class="text-[#7C8493] text-xs">Showing {{ filteredJobs.length }} results</div>
                 </div>
-                <div class="grid grid-cols-1 gap-y-4 my-4">
-                <a :href="`jobdesc/${ job.id }`" v-for="job in jobs" :key="job.id"
-                        class="flex flex-col w-[90%] border px-10 py-4 bg-white md:flex-row">
-                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_2213_23404)">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M8 17.4937V45.9385L32.4321 60.6282L32.9992 59.715L32.4321 32.1083L8.84006 17.5105L8 17.4937Z"
-                                    fill="#449B82" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M56.6005 17.3604V46.206L32.4326 60.6287V32.1086L55.7152 17.382L56.6005 17.3604Z"
-                                    fill="#9BDB9C" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M32.3 3.2041L56.6 17.3598L32.4321 32.584L8 17.4934L32.3 3.2041Z"
-                                    fill="#56CDAD" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M44.5054 14.5483L36.2866 19.413V29.2319L28.052 24.2874L20.1338 28.9743V49.497L28.3525 44.4004V33.3535L37.1307 38.9571L44.5054 34.384V14.5483Z"
-                                    fill="white" />
+                <div v-if="filteredJobs.length">
+                    <div class="grid grid-cols-1 gap-y-4 my-4">
+                        <a :href="`jobdesc/${job.id}`" v-for="job in filteredJobs" :key="job.id"
+                            class="flex flex-col w-full border px-10 py-4 bg-white md:flex-row">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_2213_23404)">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M8 17.4937V45.9385L32.4321 60.6282L32.9992 59.715L32.4321 32.1083L8.84006 17.5105L8 17.4937Z"
+                                        fill="#449B82" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M56.6005 17.3604V46.206L32.4326 60.6287V32.1086L55.7152 17.382L56.6005 17.3604Z"
+                                        fill="#9BDB9C" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M32.3 3.2041L56.6 17.3598L32.4321 32.584L8 17.4934L32.3 3.2041Z"
+                                        fill="#56CDAD" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M44.5054 14.5483L36.2866 19.413V29.2319L28.052 24.2874L20.1338 28.9743V49.497L28.3525 44.4004V33.3535L37.1307 38.9571L44.5054 34.384V14.5483Z"
+                                        fill="white" />
 
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_2213_23404">
-                                    <rect width="48.6" height="57.6" fill="white" transform="translate(8 3.2002)" />
-                                </clipPath>
-                            </defs>
-                        </svg>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_2213_23404">
+                                        <rect width="48.6" height="57.6" fill="white" transform="translate(8 3.2002)" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
 
-                        <div class="px-4 flex flex-col justify-between leading-normal">
-                            <h5 class="text-lg font-semibold tracking-tight text-gray-900">{{ job.nama }}
-                            </h5>
-                            <p class="mb-2 text-sm font-normal text-gray-700">{{ job.user.name }}</p>
-                            <div class="flex flex-row">
-                                <svg v-for="tipe in job.tipe_pekerjaan" :key="tipe.tipe" width="83" height="34"
-                                    viewBox="0 0 83 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
-                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#56CDAD"
-                                        font-size="14">
-                                        {{ tipe.tipe }}
-                                    </text>
-                                </svg>
+                            <div class="px-4 flex flex-col justify-between leading-normal">
+                                <h5 class="text-lg font-semibold tracking-tight text-gray-900">{{ job.nama }}
+                                </h5>
+                                <p class="mb-2 text-sm font-normal text-gray-700">{{ job.user.name }}</p>
+                                <div class="flex flex-row">
+                                    <svg v-for="tipe in job.tipe_pekerjaan" :key="tipe.tipe" width="83" height="34"
+                                        viewBox="0 0 83 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
+                                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                                            fill="#56CDAD" font-size="14">
+                                            {{ tipe.tipe }}
+                                        </text>
+                                    </svg>
+                                </div>
+
                             </div>
+                        </a>
 
+
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="grid grid-cols-1 gap-y-4 my-4">
+                        <div class="flex flex-col w-full border px-10 py-4 bg-white md:flex-row">
+                            <div class="px-4 flex flex-col justify-between leading-normal">
+                                <h5 class="text-lg font-semibold tracking-tight text-gray-900">No data found.
+                                </h5>
+                            </div>
                         </div>
-                    </a>
 
-
+                    </div>
                 </div>
             </div>
         </div>

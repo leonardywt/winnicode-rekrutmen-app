@@ -8,5 +8,5 @@
 <p>/company</p>
 <p>/company/job</p>
 <p>/company/job/create</p>
-<p>/company/job/edit [WIP]</p> 
-<p>/company/job/delete [WIP]</p> 
+<p>/company/job/edit</p> 
+<p>/company/job/delete</p> 

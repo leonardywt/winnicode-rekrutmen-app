@@ -6,6 +6,7 @@ import Header from './layout/header.vue';
 import Footer from './layout/footer.vue';
 const props = defineProps({
   jobs: Object,
+  latestjobs: Object,
   categoryData: Object,
 });
 </script>
@@ -71,7 +72,37 @@ const props = defineProps({
           class="group flex flex-col bg-white hover:text-white hover:bg-[#4640DE] border shadow-sm">
           <a :href="data.url" class="flex flex-col">
             <div class="p-4 md:p-7 hover:text-white">
-             
+              <div class="hidden">
+                <svg class="stroke-[#4640DE] group-hover:stroke-white" width="48" height="48" viewBox="0 0 48 48"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_2206_3736)">
+                    <path
+                      d="M6 41.9996H14L40 15.9996C41.0609 14.9388 41.6569 13.4999 41.6569 11.9996C41.6569 10.4993 41.0609 9.06049 40 7.99963C38.9391 6.93876 37.5003 6.34277 36 6.34277C34.4997 6.34277 33.0609 6.93876 32 7.99963L6 33.9996V41.9996Z"
+                      class="stroke-[#4640DE] group-hover:stroke-white" stroke-width="3" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M29 11L37 19" class="stroke-[#4640DE] group-hover:stroke-white" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M24 16L14 6L6 14L16 24" class="stroke-[#4640DE] group-hover:stroke-white" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14 16L11 19" class="stroke-[#4640DE] group-hover:stroke-white" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M32 24L42 34L34 42L24 32" class="stroke-[#4640DE] group-hover:stroke-white"
+                      stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M32 34L29 37" class="stroke-[#4640DE] group-hover:stroke-white" stroke-width="3"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_2206_3736">
+                      <rect width="48" height="48" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M24 10C22.9391 10 21.9217 10.4214 21.1716 11.1716C20.4214 11.9217 20 12.9391 20 14C20 15.0609 20.4214 16.0783 21.1716 16.8284C21.9217 17.5786 22.9391 18 24 18C25.0609 18 26.0783 17.5786 26.8284 16.8284C27.5786 16.0783 28 15.0609 28 14C28 12.9391 27.5786 11.9217 26.8284 11.1716C26.0783 10.4214 25.0609 10 24 10ZM18.3431 8.34315C19.8434 6.84285 21.8783 6 24 6C26.1217 6 28.1566 6.84285 29.6569 8.34315C31.1571 9.84344 32 11.8783 32 14C32 16.1217 31.1571 18.1566 29.6569 19.6569C28.1566 21.1571 26.1217 22 24 22C21.8783 22 19.8434 21.1571 18.3431 19.6569C16.8429 18.1566 16 16.1217 16 14C16 11.8783 16.8429 9.84344 18.3431 8.34315ZM10 18C9.46957 18 8.96086 18.2107 8.58579 18.5858C8.21071 18.9609 8 19.4696 8 20C8 20.5304 8.21071 21.0391 8.58579 21.4142C8.96086 21.7893 9.46957 22 10 22C10.5304 22 11.0391 21.7893 11.4142 21.4142C11.7893 21.0391 12 20.5304 12 20C12 19.4696 11.7893 18.9609 11.4142 18.5858C11.0391 18.2107 10.5304 18 10 18ZM5.75736 15.7574C6.88258 14.6321 8.4087 14 10 14C11.5913 14 13.1174 14.6321 14.2426 15.7574C15.3679 16.8826 16 18.4087 16 20C16 21.5913 15.3679 23.1174 14.2426 24.2426C13.1174 25.3679 11.5913 26 10 26C8.4087 26 6.88258 25.3679 5.75736 24.2426C4.63214 23.1174 4 21.5913 4 20C4 18.4087 4.63214 16.8826 5.75736 15.7574ZM38 18C37.4696 18 36.9609 18.2107 36.5858 18.5858C36.2107 18.9609 36 19.4696 36 20C36 20.5304 36.2107 21.0391 36.5858 21.4142C36.9609 21.7893 37.4696 22 38 22C38.5304 22 39.0391 21.7893 39.4142 21.4142C39.7893 21.0391 40 20.5304 40 20C40 19.4696 39.7893 18.9609 39.4142 18.5858C39.0391 18.2107 38.5304 18 38 18ZM33.7574 15.7574C34.8826 14.6321 36.4087 14 38 14C39.5913 14 41.1174 14.6321 42.2426 15.7574C43.3679 16.8826 44 18.4087 44 20C44 21.5913 43.3679 23.1174 42.2426 24.2426C41.1174 25.3679 39.5913 26 38 26C36.4087 26 34.8826 25.3679 33.7574 24.2426C32.6321 23.1174 32 21.5913 32 20C32 18.4087 32.6321 16.8826 33.7574 15.7574ZM24 27.9986C22.4005 27.9986 20.8377 28.4778 19.5132 29.3745C18.2646 30.2197 17.2817 31.3993 16.6753 32.7757L16.1931 38H31.8069L31.3247 32.7757C30.7183 31.3993 29.7354 30.2197 28.4868 29.3745C27.1623 28.4778 25.5995 27.9986 24 27.9986ZM36 38H42V36.0001C42 36.0001 42 36.0002 42 36.0001C41.9999 35.1689 41.7409 34.3582 41.2589 33.681C40.7768 33.0037 40.0957 32.4935 39.3103 32.2211C38.5249 31.9488 37.6742 31.928 36.8763 32.1615C36.4028 32.3001 35.9619 32.5242 35.5741 32.82C35.8523 33.835 36 34.902 36 36V38ZM33.8595 29.1553C33.02 27.9464 31.9607 26.8958 30.7291 26.062C28.7427 24.7173 26.3988 23.9986 24 23.9986C21.6012 23.9986 19.2573 24.7173 17.2709 26.062C16.0393 26.8958 14.98 27.9464 14.1405 29.1553C13.5515 28.799 12.9156 28.5182 12.2473 28.3226C10.6517 27.8555 8.95017 27.8972 7.37933 28.4419C5.8085 28.9865 4.44637 30.007 3.4823 31.3615C2.51823 32.716 2.00012 34.3373 2 35.9999V40C2 41.1046 2.89543 42 4 42H44C45.1046 42 46 41.1046 46 40V36C45.9999 34.3374 45.4818 32.716 44.5177 31.3615C43.5536 30.007 42.1915 28.9865 40.6207 28.4419C39.0498 27.8972 37.3483 27.8555 35.7527 28.3226C35.0844 28.5182 34.4485 28.799 33.8595 29.1553ZM12.4259 32.82C12.0381 32.5242 11.5972 32.3001 11.1237 32.1615C10.3258 31.928 9.47509 31.9488 8.68967 32.2211C7.90425 32.4935 7.22318 33.0037 6.74115 33.681C6.25914 34.3582 6.00009 35.1688 6 36C6 36 6 36 6 36V38H12V36C12 34.902 12.1477 33.835 12.4259 32.82Z"
+                    class="fill-[#4640DE] group-hover:fill-white" />
+                </svg>
+              </div>
               <div v-html="data.svg" class="group-hover:stroke-white"></div>
 
               <h3 class="text-lg pt-2 font-bold text-gray-800 group-hover:text-white">
@@ -90,7 +121,7 @@ const props = defineProps({
             </div>
           </a>
         </div>
-        
+
 
       </div>
     </div>
@@ -103,7 +134,8 @@ const props = defineProps({
 
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 my-8 mx-auto">
-          <a href="/perusahaan/jobdesc" class="flex flex-col px-10 py-4 bg-white md:flex-row md:max-w-xl">
+          <a v-for="job in props.latestjobs" :key="job.id" :href="`/jobdesc/${job.id}`"
+            class="flex flex-col px-10 py-4 bg-white md:flex-row md:max-w-xl">
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_2213_23404)">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -126,14 +158,17 @@ const props = defineProps({
             </svg>
 
             <div class="px-4 flex flex-col justify-between leading-normal">
-              <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">Ini judul</h5>
-              <p class="mb-3 font-normal text-gray-700">Nama perusahaan.</p>
-              <svg width="83" height="34" viewBox="0 0 83 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#56CDAD" font-size="14">
-                  Full-Time
-                </text>
-              </svg>
+              <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">{{ job.nama }}</h5>
+              <p class="mb-3 font-normal text-gray-700">{{ job.user.name }}</p>
+              <div class="flex flex-row">
+                <svg v-for="tipe in job.tipe_pekerjaan" :key="tipe.tipe" width="83" height="34" viewBox="0 0 83 34"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="83" height="34" rx="17" fill="#56CDAD" fill-opacity="0.1" />
+                  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#56CDAD" font-size="14">
+                    {{ tipe.tipe }}
+                  </text>
+                </svg>
+              </div>
 
             </div>
           </a>

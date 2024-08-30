@@ -19,7 +19,7 @@ defineProps({
     <AuthenticatedLayout>
 
         <Head title="Job Dashboard" />
-        <div class="mx-auto px-20 py-4">
+        <div class="w-[80%] mx-auto py-4">
             <div class="w-full">
                 <div class="flex justify-between">
                     <div>
